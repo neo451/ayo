@@ -1,0 +1,56 @@
+package config
+
+import (
+	"github.com/BurntSushi/toml"
+)
+
+type PromptConfig struct {
+	Format string `toml:"format"`
+	Ok     string `toml:"ok"`
+	Err    string `toml:"err"`
+}
+
+type ProgressConfig struct {
+	Frequency int  `toml:"frequency"`
+	Enabled   bool `toml:"enabled"`
+}
+
+type Config struct {
+	Lib      []string          `toml:"lib"`
+	Cmd      map[string]string `toml:"cmd"`
+	Progress ProgressConfig    `toml:"progress"`
+	Prompt   PromptConfig      `toml:"prompt"`
+}
+
+func DefaultConfig() Config {
+	return Config{
+		Lib: []string{"characters.json"},
+		Cmd: map[string]string{
+			"exit": "q",
+		},
+		Prompt: PromptConfig{
+			Ok:     "✅ Correct!",
+			Err:    "❌ Incorrect. The answer is '%s'",
+			Format: "[{{.System}}] What is '{{.Symbol}}'? ",
+		},
+		Progress: ProgressConfig{
+			Frequency: 5,
+			Enabled:   true, // TODO: not used for now
+		},
+	}
+}
+
+func Load(filename string) (Config, error) {
+	cfg := DefaultConfig()
+	if _, err := toml.DecodeFile(filename, &cfg); err != nil {
+		return cfg, err
+	}
+	return cfg, nil
+}
+
+func (c Config) Print() string {
+	bytes, err := toml.Marshal(c)
+	if err != nil {
+	}
+	return string(bytes)
+}
