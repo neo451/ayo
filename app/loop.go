@@ -29,9 +29,8 @@ func Loop(cfg config.Config, characters []characters.Character) {
 	correct := 0
 	attempts := 0
 
-	fmt.Println("Language Character Quiz")
-	fmt.Println("Type the spelling for each character. Type 'exit' to quit.")
-	fmt.Printf("Total characters: %d\n\n", len(characters))
+	fmt.Println("Alpha v0.1")
+	fmt.Printf("Type %s to quit\n", cfg.Cmd.Exit)
 
 	// TODO: Ctrl-D
 	for {
@@ -48,7 +47,7 @@ func Loop(cfg config.Config, characters []characters.Character) {
 		input := strings.TrimSpace(scanner.Text())
 
 		// Exit condition
-		if strings.EqualFold(input, cfg.Cmd["exit"]) {
+		if strings.EqualFold(input, cfg.Cmd.Exit) {
 			break
 		}
 

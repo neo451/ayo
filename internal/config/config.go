@@ -10,23 +10,27 @@ type PromptConfig struct {
 	Err    string `toml:"err"`
 }
 
+type CmdConfig struct {
+	Exit string `toml:"exit"`
+}
+
 type ProgressConfig struct {
 	Frequency int  `toml:"frequency"`
 	Enabled   bool `toml:"enabled"`
 }
 
 type Config struct {
-	Lib      []string          `toml:"lib"`
-	Cmd      map[string]string `toml:"cmd"`
-	Progress ProgressConfig    `toml:"progress"`
-	Prompt   PromptConfig      `toml:"prompt"`
+	Lib      []string       `toml:"lib"`
+	Cmd      CmdConfig      `toml:"cmd"`
+	Progress ProgressConfig `toml:"progress"`
+	Prompt   PromptConfig   `toml:"prompt"`
 }
 
 func DefaultConfig() Config {
 	return Config{
 		Lib: []string{"characters.json"},
-		Cmd: map[string]string{
-			"exit": "q",
+		Cmd: CmdConfig{
+			Exit: "q",
 		},
 		Prompt: PromptConfig{
 			Ok:     "✅ Correct!",

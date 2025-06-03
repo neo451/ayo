@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "가",
+    "spelling": "ga",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "나",
+    "spelling": "na",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "다",
+    "spelling": "da",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "마",
+    "spelling": "ma",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "바",
+    "spelling": "ba",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "사",
+    "spelling": "sa",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "아",
+    "spelling": "a",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "자",
+    "spelling": "ja",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "차",
+    "spelling": "cha",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "카",
+    "spelling": "ka",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "타",
+    "spelling": "ta",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "파",
+    "spelling": "pa",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "하",
+    "spelling": "ha",
+    "system": "hanguel"
+  }
+]
