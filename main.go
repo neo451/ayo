@@ -3,13 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-
 	"github.com/neo451/alpha/app"
 	"github.com/neo451/alpha/internal/characters"
 	"github.com/neo451/alpha/internal/config"
+	"io"
+	"os"
+	"path/filepath"
 )
 
 func loadLibrary(filename string) ([]characters.Character, error) {
@@ -81,8 +80,7 @@ func moveProjectDataToXDGData() error {
 	})
 }
 
-func main() {
-
+func setupFiles() (string, string) {
 	configDir := getXDGPath("XDG_CONFIG_HOME", ".config")
 	dataDir := getXDGPath("XDG_DATA_HOME", ".local/share")
 
@@ -99,16 +97,21 @@ func main() {
 	if err := moveProjectDataToXDGData(); err != nil {
 		fmt.Println("Error moving data:", err)
 	}
+	return configDir, dataDir
+}
 
-	cfg, err := config.Load(filepath.Join(configDir, "config.toml"))
-	if err != nil {
-		fmt.Printf("Error loading config %v\n", err)
+func main() {
+	configDir, dataDir := setupFiles()
+
+	cfg, config_err := config.Load(filepath.Join(configDir, "config.toml"))
+	if config_err != nil {
+		fmt.Printf("Error loading config %v\n", config_err)
 		return
 	}
 
-	characters, err := loadLibrary(filepath.Join(dataDir, cfg.Lib[0]))
+	characters, config_err := loadLibrary(filepath.Join(dataDir, cfg.Lib[0]))
 
-	if err != nil {
+	if config_err != nil {
 		panic("no library loaded")
 	}
 
