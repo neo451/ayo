@@ -29,7 +29,7 @@ type Config struct {
 
 func DefaultConfig() Config {
 	return Config{
-		Lib: []string{"characters.json"},
+		Lib: []string{"kor.csv"},
 		Cmd: CmdConfig{
 			Exit: "q",
 		},

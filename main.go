@@ -1,29 +1,33 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/csv"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/neo451/alpha/app"
-	"github.com/neo451/alpha/app/stat"
-	"github.com/neo451/alpha/internal/characters"
+	// "github.com/neo451/alpha/app/stat"
+	char "github.com/neo451/alpha/internal/characters"
 	"github.com/neo451/alpha/internal/config"
 )
 
-func loadLibrary(filename string) ([]characters.Character, error) {
+func loadLibrary(filename string) ([]char.Character, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var characters []characters.Character
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&characters); err != nil {
-		return nil, err
+	var characters []char.Character
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+
+	for i, v := range records {
+		if i != 0 { // TOOD: sure there's better way
+			characters = append(characters, char.Character{Spelling: v[1], System: v[2], Symbol: v[0]})
+		}
 	}
 	return characters, nil
 }
@@ -121,8 +125,8 @@ func main() {
 		panic("no library loaded")
 	}
 
-	_ = quiz.Loop
-	_ = characters
+	// _ = quiz.Loop
+	// _ = characters
 	quiz.Loop(cfg, characters)
 
 	// stat.RenderStat(characters)
