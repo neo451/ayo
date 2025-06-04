@@ -1,4 +1,4 @@
-# alpha
+# ayo
 
 Language learning in your cmdline.
 

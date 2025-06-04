@@ -1,4 +1,4 @@
-module github.com/neo451/alpha
+module github.com/neo451/ayo
 
 go 1.24.3
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/neo451/alpha/internal/characters"
-	"github.com/neo451/alpha/internal/config"
+	"github.com/neo451/ayo/internal/characters"
+	"github.com/neo451/ayo/internal/config"
 	"math/rand"
 	"os"
 	"strings"
@@ -95,7 +95,7 @@ func (m model) RenderLeave() string {
 }
 
 func (m model) RenderWelcome() string {
-	str := fmt.Sprintf("Alpha v0.1 — Type '%s' to quit", m.cfg.Cmd.Exit)
+	str := fmt.Sprintf("Ayo v0.1 — Type '%s' to quit", m.cfg.Cmd.Exit)
 	return m.cfg.Theme.WelcomeColor.Render(str)
 }
 

@@ -5,7 +5,7 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/neo451/alpha/internal/characters"
+	"github.com/neo451/ayo/internal/characters"
 	"os"
 )
 

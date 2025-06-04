@@ -7,10 +7,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/neo451/alpha/app"
-	// "github.com/neo451/alpha/app/stat"
-	char "github.com/neo451/alpha/internal/characters"
-	"github.com/neo451/alpha/internal/config"
+	"github.com/neo451/ayo/app"
+	// "github.com/neo451/ayo/app/stat"
+	char "github.com/neo451/ayo/internal/characters"
+	"github.com/neo451/ayo/internal/config"
 )
 
 func loadLibrary(filename string) ([]char.Character, error) {
@@ -41,7 +41,7 @@ func getXDGPath(envVar, defaultSubdir string) string {
 		}
 		base = filepath.Join(home, defaultSubdir)
 	}
-	return filepath.Join(base, "alpha")
+	return filepath.Join(base, "ayo")
 }
 
 // TODO: don't copy if data is there
