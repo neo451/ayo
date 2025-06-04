@@ -35,18 +35,17 @@ func DefaultConfig() Config {
 		Prompt: PromptConfig{
 			Ok:     "✅ Correct!",
 			Err:    "❌ Incorrect. The answer is '%s'",
-			Format: "[{{.System}}] What is '{{.Symbol}}'? ",
+			Format: "[{{.System}}] '{{.Symbol}}'> ",
 		},
 		Progress: ProgressConfig{
 			Frequency: 5,
-			Enabled:   true, // TODO: not used for now
 		},
 	}
 }
 
 func Load(filename string) (Config, error) {
 	cfg := DefaultConfig()
-	if _, err := toml.DecodeFile(filename, &cfg); err != nil {
+	if _, err := toml.Decode(filename, &cfg); err != nil {
 		return cfg, err
 	}
 	return cfg, nil

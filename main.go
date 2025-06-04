@@ -74,8 +74,6 @@ func moveProjectDataToXDGData() error {
 		if err != nil {
 			return err
 		}
-
-		fmt.Printf("Copied %s → %s\n", path, destPath)
 		return nil
 	})
 }
@@ -102,16 +100,22 @@ func setupFiles() (string, string) {
 
 func main() {
 	configDir, dataDir := setupFiles()
+	configPath := filepath.Join(configDir, "config.toml")
+	config_str, read_err := os.ReadFile(configPath)
 
-	cfg, config_err := config.Load(filepath.Join(configDir, "config.toml"))
-	if config_err != nil {
-		fmt.Printf("Error loading config %v\n", config_err)
+	if read_err != nil {
+		panic("no config file")
+	}
+
+	cfg, lib_err := config.Load(string(config_str))
+	if lib_err != nil {
+		fmt.Printf("Error loading config %v\n", lib_err)
 		return
 	}
 
-	characters, config_err := loadLibrary(filepath.Join(dataDir, cfg.Lib[0]))
+	characters, lib_err := loadLibrary(filepath.Join(dataDir, cfg.Lib[0]))
 
-	if config_err != nil {
+	if lib_err != nil {
 		panic("no library loaded")
 	}
 
