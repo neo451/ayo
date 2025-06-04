@@ -1,5 +1,110 @@
 [
   {
+    "symbol": "아",
+    "spelling": "a",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "야",
+    "spelling": "ya",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "어",
+    "spelling": "eo",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "여",
+    "spelling": "yeo",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "오",
+    "spelling": "o",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "요",
+    "spelling": "yo",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "우",
+    "spelling": "u",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "유",
+    "spelling": "yu",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "으",
+    "spelling": "eu",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "이",
+    "spelling": "i",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "애",
+    "spelling": "ae",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "얘",
+    "spelling": "yae",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "에",
+    "spelling": "e",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "예",
+    "spelling": "ye",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "와",
+    "spelling": "wa",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "왜",
+    "spelling": "wae",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "외",
+    "spelling": "oe",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "워",
+    "spelling": "wo",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "웨",
+    "spelling": "we",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "위",
+    "spelling": "wi",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "의",
+    "spelling": "ui",
+    "system": "hanguel"
+  },
+  {
     "symbol": "가",
     "spelling": "ga",
     "system": "hanguel"
@@ -15,6 +120,11 @@
     "system": "hanguel"
   },
   {
+    "symbol": "라",
+    "spelling": "ra",
+    "system": "hanguel"
+  },
+  {
     "symbol": "마",
     "spelling": "ma",
     "system": "hanguel"
@@ -27,11 +137,6 @@
   {
     "symbol": "사",
     "spelling": "sa",
-    "system": "hanguel"
-  },
-  {
-    "symbol": "아",
-    "spelling": "a",
     "system": "hanguel"
   },
   {
@@ -62,6 +167,31 @@
   {
     "symbol": "하",
     "spelling": "ha",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "까",
+    "spelling": "kka",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "따",
+    "spelling": "tta",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "빠",
+    "spelling": "ppa",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "싸",
+    "spelling": "ssa",
+    "system": "hanguel"
+  },
+  {
+    "symbol": "짜",
+    "spelling": "jja",
     "system": "hanguel"
   }
 ]

@@ -3,12 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/neo451/alpha/app"
-	"github.com/neo451/alpha/internal/characters"
-	"github.com/neo451/alpha/internal/config"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/neo451/alpha/app"
+	"github.com/neo451/alpha/app/stat"
+	"github.com/neo451/alpha/internal/characters"
+	"github.com/neo451/alpha/internal/config"
 )
 
 func loadLibrary(filename string) ([]characters.Character, error) {
@@ -119,7 +121,9 @@ func main() {
 		panic("no library loaded")
 	}
 
-	// _ = loop.Loop
-	// _ = characters
+	_ = quiz.Loop
+	_ = characters
 	quiz.Loop(cfg, characters)
+
+	// stat.RenderStat(characters)
 }
