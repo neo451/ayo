@@ -121,5 +121,5 @@ func main() {
 
 	// _ = loop.Loop
 	// _ = characters
-	loop.Loop(cfg, characters)
+	quiz.Loop(cfg, characters)
 }

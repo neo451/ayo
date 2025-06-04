@@ -1,4 +1,4 @@
-package loop
+package quiz
 
 import (
 	"bytes"
@@ -24,23 +24,35 @@ type model struct {
 	showMessage string
 }
 
-func initialModel(cfg config.Config, chars []characters.Character) model {
-	ti := textinput.New()
-	ti.Placeholder = "Type here"
-	ti.Focus()
-	ti.CharLimit = 156
-	ti.Width = 40
-
-	return model{
-		cfg:       cfg,
-		chars:     chars,
-		char:      chars[rand.Intn(len(chars))],
-		textInput: ti,
-	}
-}
-
 func (m model) Init() tea.Cmd {
 	return textinput.Blink
+}
+
+func (m model) RenderOk() string {
+	return m.cfg.Theme.CorrectColor.Render(m.cfg.Prompt.Ok)
+}
+
+func (m model) RenderErr() string {
+	str := fmt.Sprintf(m.cfg.Prompt.Err, m.char.Spelling)
+	return m.cfg.Theme.IncorrectColor.Render(str)
+}
+
+func (m model) RenderProgress() string {
+	progressStr := "\nProgress: 0/0 (0%)\n\n"
+	if m.attempts > 0 {
+		progressStr = fmt.Sprintf("\nProgress: %d/%d (%.0f%%)\n",
+			m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
+	}
+	return m.cfg.Theme.ProgressColor.Render(progressStr)
+}
+
+func (m model) RenderPrompt() string {
+	promptStr, err := RenderTemplate(m.cfg.Prompt.Format, m.char)
+	if err != nil {
+		promptStr = "[template error]\n"
+	}
+
+	return m.cfg.Theme.PromptColor.Render(promptStr)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -61,9 +73,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.attempts++
 			if strings.EqualFold(input, m.char.Spelling) {
 				m.correct++
-				m.showMessage = m.cfg.Prompt.Ok
+				m.showMessage = m.RenderOk()
 			} else {
-				m.showMessage = fmt.Sprintf(m.cfg.Prompt.Err, m.char.Spelling)
+				m.showMessage = m.RenderErr()
 			}
 
 			m.textInput.SetValue("")
@@ -77,28 +89,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
+func (m model) RenderLeave() string {
+	str := fmt.Sprintf("\nFinal score: %d/%d (%.0f%%)\nGoodbye!\n", m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
+	return m.cfg.Theme.QuitMessageColor.Render(str)
+}
+
 func (m model) View() string {
 	if m.quitting {
-		return fmt.Sprintf("\nFinal score: %d/%d (%.0f%%)\nGoodbye!\n",
-			m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
+		return m.RenderLeave()
 	}
 
-	prompt, err := RenderTemplate(m.cfg.Prompt.Format, m.char)
-	if err != nil {
-		prompt = "[template error]\n"
-	}
-
-	progress := ""
-	if m.attempts > 0 && m.attempts%m.cfg.Progress.Frequency == 0 {
-		progress = fmt.Sprintf("\nProgress: %d/%d (%.0f%%)\n\n",
-			m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
-	}
-
-	return fmt.Sprintf("Alpha v0.1 — Type '%s' to quit\n\n%s\n%s\n\n%s\n",
+	return fmt.Sprintf("Alpha v0.1 — Type '%s' to quit\n\n%s\n%s\n%s\n%s\n",
 		m.cfg.Cmd.Exit,
-		prompt,
+		m.RenderPrompt(),
 		m.textInput.View(),
-		m.showMessage+progress)
+		m.RenderProgress(),
+		m.showMessage)
 }
 
 func RenderTemplate(tmplStr string, ctx any) (string, error) {
@@ -111,6 +117,21 @@ func RenderTemplate(tmplStr string, ctx any) (string, error) {
 		return "", err
 	}
 	return buf.String(), nil
+}
+
+func initialModel(cfg config.Config, chars []characters.Character) model {
+	ti := textinput.New()
+	ti.Placeholder = "Type here"
+	ti.Focus()
+	ti.CharLimit = 156
+	ti.Width = 40
+
+	return model{
+		cfg:       cfg,
+		chars:     chars,
+		char:      chars[rand.Intn(len(chars))],
+		textInput: ti,
+	}
 }
 
 // Call this from your main function

@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type PromptConfig struct {
@@ -24,6 +25,18 @@ type Config struct {
 	Cmd      CmdConfig      `toml:"cmd"`
 	Progress ProgressConfig `toml:"progress"`
 	Prompt   PromptConfig   `toml:"prompt"`
+	Theme    Theme
+}
+
+func DefaultTheme() Theme {
+	return Theme{
+		PromptColor:      lipgloss.NewStyle().Foreground(lipgloss.Color("205")).Bold(true),
+		InputColor:       lipgloss.NewStyle().Foreground(lipgloss.Color("229")),
+		CorrectColor:     lipgloss.NewStyle().Foreground(lipgloss.Color("42")),
+		IncorrectColor:   lipgloss.NewStyle().Foreground(lipgloss.Color("196")),
+		ProgressColor:    lipgloss.NewStyle().Foreground(lipgloss.Color("36")),
+		QuitMessageColor: lipgloss.NewStyle().Foreground(lipgloss.Color("8")),
+	}
 }
 
 func DefaultConfig() Config {
@@ -40,6 +53,7 @@ func DefaultConfig() Config {
 		Progress: ProgressConfig{
 			Frequency: 5,
 		},
+		Theme: DefaultTheme(),
 	}
 }
 
