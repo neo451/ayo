@@ -91,7 +91,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) RenderLeave() string {
 	str := fmt.Sprintf("\nFinal score: %d/%d (%.0f%%)\nGoodbye!\n", m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
-	return m.cfg.Theme.QuitMessageColor.Render(str)
+	return m.cfg.Theme.QuitColor.Render(str)
+}
+
+func (m model) RenderWelcome() string {
+	str := fmt.Sprintf("Alpha v0.1 — Type '%s' to quit", m.cfg.Cmd.Exit)
+	return m.cfg.Theme.WelcomeColor.Render(str)
 }
 
 func (m model) View() string {
@@ -99,8 +104,8 @@ func (m model) View() string {
 		return m.RenderLeave()
 	}
 
-	return fmt.Sprintf("Alpha v0.1 — Type '%s' to quit\n\n%s\n%s\n%s\n%s\n",
-		m.cfg.Cmd.Exit,
+	return fmt.Sprintf("%s\n\n%s\n%s\n%s\n%s\n",
+		m.RenderWelcome(),
 		m.RenderPrompt(),
 		m.textInput.View(),
 		m.RenderProgress(),
@@ -137,7 +142,7 @@ func initialModel(cfg config.Config, chars []characters.Character) model {
 // Call this from your main function
 func Loop(cfg config.Config, chars []characters.Character) {
 	p := tea.NewProgram(initialModel(cfg, chars))
-	if err := p.Start(); err != nil {
+	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running program:", err)
 		os.Exit(1)
 	}

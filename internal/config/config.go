@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type PromptConfig struct {
@@ -28,17 +27,6 @@ type Config struct {
 	Theme    Theme
 }
 
-func DefaultTheme() Theme {
-	return Theme{
-		PromptColor:      lipgloss.NewStyle().Foreground(lipgloss.Color("205")).Bold(true),
-		InputColor:       lipgloss.NewStyle().Foreground(lipgloss.Color("229")),
-		CorrectColor:     lipgloss.NewStyle().Foreground(lipgloss.Color("42")),
-		IncorrectColor:   lipgloss.NewStyle().Foreground(lipgloss.Color("196")),
-		ProgressColor:    lipgloss.NewStyle().Foreground(lipgloss.Color("36")),
-		QuitMessageColor: lipgloss.NewStyle().Foreground(lipgloss.Color("8")),
-	}
-}
-
 func DefaultConfig() Config {
 	return Config{
 		Lib: []string{"characters.json"},
@@ -48,7 +36,7 @@ func DefaultConfig() Config {
 		Prompt: PromptConfig{
 			Ok:     "✅ Correct!",
 			Err:    "❌ Incorrect. The answer is '%s'",
-			Format: "[{{.System}}] '{{.Symbol}}'> ",
+			Format: "[{{.System}}] {{.Symbol}}",
 		},
 		Progress: ProgressConfig{
 			Frequency: 5,
