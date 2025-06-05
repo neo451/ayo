@@ -1,4 +1,6 @@
-package quiz
+package app
+
+// quiz: match user spelling to answer
 
 import (
 	"bytes"
@@ -13,7 +15,7 @@ import (
 	"text/template"
 )
 
-type model struct {
+type quiz struct {
 	cfg         config.Config
 	chars       []characters.Character
 	char        characters.Character
@@ -24,20 +26,20 @@ type model struct {
 	showMessage string
 }
 
-func (m model) Init() tea.Cmd {
+func (m quiz) Init() tea.Cmd {
 	return textinput.Blink
 }
 
-func (m model) RenderOk() string {
+func (m quiz) RenderOk() string {
 	return m.cfg.Theme.CorrectColor.Render(m.cfg.Prompt.Ok)
 }
 
-func (m model) RenderErr() string {
+func (m quiz) RenderErr() string {
 	str := fmt.Sprintf(m.cfg.Prompt.Err, m.char.Spelling)
 	return m.cfg.Theme.IncorrectColor.Render(str)
 }
 
-func (m model) RenderProgress() string {
+func (m quiz) RenderProgress() string {
 	progressStr := "\nProgress: 0/0 (0%)\n\n"
 	if m.attempts > 0 {
 		progressStr = fmt.Sprintf("\nProgress: %d/%d (%.0f%%)\n",
@@ -46,7 +48,7 @@ func (m model) RenderProgress() string {
 	return m.cfg.Theme.ProgressColor.Render(progressStr)
 }
 
-func (m model) RenderPrompt() string {
+func (m quiz) RenderPrompt() string {
 	promptStr, err := RenderTemplate(m.cfg.Prompt.Format, m.char)
 	if err != nil {
 		promptStr = "[template error]\n"
@@ -55,7 +57,7 @@ func (m model) RenderPrompt() string {
 	return m.cfg.Theme.PromptColor.Render(promptStr)
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m quiz) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.Type {
@@ -89,17 +91,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m model) RenderLeave() string {
+func (m quiz) RenderLeave() string {
 	str := fmt.Sprintf("\nFinal score: %d/%d (%.0f%%)\nGoodbye!\n", m.correct, m.attempts, float64(m.correct)/float64(m.attempts)*100)
 	return m.cfg.Theme.QuitColor.Render(str)
 }
 
-func (m model) RenderWelcome() string {
+func (m quiz) RenderWelcome() string {
 	str := fmt.Sprintf("Ayo v0.1 — Type '%s' to quit", m.cfg.Cmd.Exit)
 	return m.cfg.Theme.WelcomeColor.Render(str)
 }
 
-func (m model) View() string {
+func (m quiz) View() string {
 	if m.quitting {
 		return m.RenderLeave()
 	}
@@ -124,14 +126,14 @@ func RenderTemplate(tmplStr string, ctx any) (string, error) {
 	return buf.String(), nil
 }
 
-func initialModel(cfg config.Config, chars []characters.Character) model {
+func initialQuiz(cfg config.Config, chars []characters.Character) quiz {
 	ti := textinput.New()
 	ti.Placeholder = "Type here"
 	ti.Focus()
 	ti.CharLimit = 156
 	ti.Width = 40
 
-	return model{
+	return quiz{
 		cfg:       cfg,
 		chars:     chars,
 		char:      chars[rand.Intn(len(chars))],
@@ -139,9 +141,8 @@ func initialModel(cfg config.Config, chars []characters.Character) model {
 	}
 }
 
-// Call this from your main function
-func Loop(cfg config.Config, chars []characters.Character) {
-	p := tea.NewProgram(initialModel(cfg, chars))
+func Quiz(cfg config.Config, chars []characters.Character) {
+	p := tea.NewProgram(initialQuiz(cfg, chars))
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running program:", err)
 		os.Exit(1)

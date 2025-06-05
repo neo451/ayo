@@ -127,7 +127,8 @@ func main() {
 
 	// _ = quiz.Loop
 	// _ = characters
-	quiz.Loop(cfg, characters)
+	app.Quiz(cfg, characters)
+	// app.Card(cfg, characters)
 
 	// stat.RenderStat(characters)
 }
