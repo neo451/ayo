@@ -17,6 +17,8 @@ TODO:
   - duolingo backend
     - [unofficial API](https://github.com/iSteve-O/Duolingo)
 - Lua Scripting for practice modes, designing UI
+  - All bubbles component
+  - Lipgloss or just style attributes?
   - while go is for:
     - fetching remote resource
     - rendering UI
