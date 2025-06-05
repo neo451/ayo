@@ -1,36 +1,15 @@
 package main
 
 import (
-	"encoding/csv"
 	"fmt"
+	"github.com/neo451/ayo/app"
+	char "github.com/neo451/ayo/internal/characters"
+	"github.com/neo451/ayo/internal/config"
 	"io"
 	"os"
 	"path/filepath"
-
-	"github.com/neo451/ayo/app"
 	// "github.com/neo451/ayo/app/stat"
-	char "github.com/neo451/ayo/internal/characters"
-	"github.com/neo451/ayo/internal/config"
 )
-
-func loadLibrary(filename string) ([]char.Character, error) {
-	file, err := os.Open(filename)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var characters []char.Character
-	reader := csv.NewReader(file)
-	records, err := reader.ReadAll()
-
-	for i, v := range records {
-		if i != 0 { // TOOD: sure there's better way
-			characters = append(characters, char.Character{Spelling: v[1], System: v[2], Symbol: v[0]})
-		}
-	}
-	return characters, nil
-}
 
 func getXDGPath(envVar, defaultSubdir string) string {
 	base := os.Getenv(envVar)
@@ -93,8 +72,8 @@ func setupFiles() (string, string) {
 
 	configFile := filepath.Join(configDir, "config.toml")
 
-	_, config_err := os.ReadFile(configFile)
-	if config_err != nil {
+	_, configErr := os.ReadFile(configFile)
+	if configErr != nil {
 		os.WriteFile(configFile, []byte("# **some helpful comments**\n"), 0644)
 	}
 
@@ -104,31 +83,29 @@ func setupFiles() (string, string) {
 	return configDir, dataDir
 }
 
-func main() {
+// Init data and config
+func setup() config.Config {
 	configDir, dataDir := setupFiles()
 	configPath := filepath.Join(configDir, "config.toml")
-	config_str, read_err := os.ReadFile(configPath)
+	configStr, read_err := os.ReadFile(configPath)
 
 	if read_err != nil {
 		panic("no config file")
 	}
 
-	cfg, lib_err := config.Load(string(config_str))
+	cfg, lib_err := config.Load(string(configStr))
 	if lib_err != nil {
-		fmt.Printf("Error loading config %v\n", lib_err)
-		return
+		panic(fmt.Sprintf("Error loading config %v\n", lib_err))
 	}
+	cfg.DataDir = dataDir
+	return cfg
+}
 
-	characters, lib_err := loadLibrary(filepath.Join(dataDir, cfg.Lib[0]))
+func main() {
+	cfg := setup()
+	characters := char.Load(filepath.Join(cfg.DataDir, cfg.Lib[0]))
 
-	if lib_err != nil {
-		panic("no library loaded")
-	}
-
-	// _ = quiz.Loop
-	// _ = characters
 	app.Quiz(cfg, characters)
 	// app.Card(cfg, characters)
-
 	// stat.RenderStat(characters)
 }

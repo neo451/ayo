@@ -25,6 +25,7 @@ type Config struct {
 	Progress ProgressConfig `toml:"progress"`
 	Prompt   PromptConfig   `toml:"prompt"`
 	Theme    Theme
+	DataDir  string
 }
 
 func DefaultConfig() Config {
