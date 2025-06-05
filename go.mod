@@ -9,6 +9,7 @@ require (
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/erobx/golingo v0.0.0-20250430221040-6c22b62ac183
 	github.com/flimzy/anki v0.0.0-20191116175829-03460c56b85c
+	github.com/yuin/gopher-lua v1.1.1
 )
 
 require (

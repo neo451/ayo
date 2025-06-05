@@ -8,7 +8,9 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	// "github.com/neo451/ayo/lua"
 	// "github.com/neo451/ayo/app/stat"
+	// "github.com/neo451/ayo/tatoeba"
 )
 
 func getXDGPath(envVar, defaultSubdir string) string {
@@ -106,6 +108,12 @@ func main() {
 	characters := char.Load(filepath.Join(cfg.DataDir, cfg.Lib[0]))
 
 	app.Quiz(cfg, characters)
+
+	// _ = lua.Load
+	// _ = characters
+	// _ = app.Quiz
+	//
+	// lua.Load(cfg, characters, "quiz.lua")
 	// app.Card(cfg, characters)
 	// stat.RenderStat(characters)
 }

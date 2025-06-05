@@ -16,3 +16,8 @@ TODO:
     - Or API?
   - duolingo backend
     - [unofficial API](https://github.com/iSteve-O/Duolingo)
+- Lua Scripting for practice modes, designing UI
+  - while go is for:
+    - fetching remote resource
+    - rendering UI
+    - maintaining sqlite db

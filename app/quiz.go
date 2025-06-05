@@ -5,14 +5,15 @@ package app
 import (
 	"bytes"
 	"fmt"
-	"github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/neo451/ayo/internal/characters"
-	"github.com/neo451/ayo/internal/config"
 	"math/rand"
 	"os"
 	"strings"
 	"text/template"
+
+	"github.com/charmbracelet/bubbles/textinput"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/neo451/ayo/internal/characters"
+	"github.com/neo451/ayo/internal/config"
 )
 
 type quiz struct {
