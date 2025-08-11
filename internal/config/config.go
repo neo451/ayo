@@ -36,7 +36,7 @@ func DefaultConfig() Config {
 		},
 		Prompt: PromptConfig{
 			Ok:     "✅ Correct!",
-			Err:    "❌ Incorrect. The answer is '%s'",
+			Err:    "❌ Incorrect. The answer is '%s' -> '%s'",
 			Format: "[{{.System}}] {{.Symbol}}",
 		},
 		Progress: ProgressConfig{

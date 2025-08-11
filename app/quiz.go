@@ -36,7 +36,7 @@ func (m quiz) RenderOk() string {
 }
 
 func (m quiz) RenderErr() string {
-	str := fmt.Sprintf(m.cfg.Prompt.Err, m.char.Spelling)
+	str := fmt.Sprintf(m.cfg.Prompt.Err, m.char.Symbol, m.char.Spelling)
 	return m.cfg.Theme.IncorrectColor.Render(str)
 }
 
